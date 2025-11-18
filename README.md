@@ -17,3 +17,14 @@ Esto permitirá identificar residuos funcionales importantes, localizar sitios a
 - Estructura 3D con anotaciones de conservación
 - Secuencia con anotaciones de conservación
 
+## Flujo
+### 1. Búsqueda de secuencia homólogas
+Las secuencias homólogas a la secuencia input se obtienen a partir de un hmmsearch en la base de datos de Pfam. 
+### 2. Alineamiento de secuencia múltiple
+A partir de la secuencia y los mejores homólogos (se podría insertar un propio archivo de homología) se realiza el alineamiento con T-coffee o mafft. 
+### 3. Obtención de árbol filogenético
+A partir del MSA generado
+### 4. Cálculo de conservación utilizando Rate4Site
+### 5. Visualización en 3D 
+Las estructuras 3D se anotan con los resultados de Rate4Site utilizando Jmol. 
+
