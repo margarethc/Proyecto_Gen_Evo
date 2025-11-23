@@ -5,7 +5,7 @@ Resumen
 Este repositorio contiene la descripción de un pipeline bioinformático para identificar secuencias candidatas a cutinasas a partir de archivos FASTA de proteínas (.faa) y un perfil HMM (.hmm); filtrar por e‑valor; eliminar péptidos señal con SignalP 6; anotar dominios con InterProScan; seleccionar secuencias con dominio de cutinasa; preparar MSAs por consulta junto con secuencias de referencia y ejecutar ConSurf sobre modelos estructurales.  
 Este documento explica requisitos, convenciones de nombres, pasos, ejemplos de comandos y recomendaciones de despliegue.
 
-Pregunta de investigación, hipótesis y variables
+Pregunta de investigación, hipótesis y objetivo
 -----------------------------------------------
 
 **Pregunta de investigación**
@@ -14,6 +14,8 @@ Pregunta de investigación, hipótesis y variables
 **Hipótesis**
 La integración de detección por HMMER, anotación de dominios con InterProScan y análisis de conservación estructural permitirá diferenciar de manera confiable las cutinasas funcionales de las proteínas cutinasa-like, al combinar evidencia de similitud de secuencia, arquitectura de dominios y conservación de residuos catalíticos.
 
+**Objetivo**
+Desarrollar y evaluar un pipeline automatizado que integre HMMER, InterProScan y análisis de conservación estructural para discriminar entre cutinasas funcionales y proteínas cutinasa-like en proteomas diversos.
 
 Tabla de contenidos
 ------------------
