@@ -1,30 +1,118 @@
-# Proyecto_Gen_Evo
-Proyecto del curso de Genómica Evolutiva
-# Análisis de conservación evolutiva para secuencias proteicas
-## Objetivo
-El objetivo de este trabajo es estimar la conservación evolutiva de cada residuo de una proteínas y mapear dichos valores en una estructura 3D. 
-Esto permitirá identificar residuos funcionales importantes, localizar sitios activos, diferenciar regiones conservadas vs. variables y comparar modelos estructurales.
+# Pipeline para identificación, filtrado y análisis de cutinasas
 
-## Abstract
+Resumen
+-------
+Este repositorio contiene la descripción de un pipeline bioinformático para identificar secuencias candidatas a cutinasas a partir de archivos FASTA de proteínas (.faa) y un perfil HMM (.hmm); filtrar por e‑valor; eliminar péptidos señal con SignalP 6; anotar dominios con InterProScan; seleccionar secuencias con dominio de cutinasa; preparar MSAs por consulta junto con secuencias de referencia y ejecutar ConSurf sobre modelos estructurales.  
+Este documento explica requisitos, convenciones de nombres, pasos, ejemplos de comandos y recomendaciones de despliegue.
 
-## Variables
-### Inputs
-- Secuencia de aminoácidos
-- Estructura 3D de la proteína
-- MSA (a partir de la secuencia)
-- Árbol filogenético (a partir del MSA)
-### Outputs
-- Estructura 3D con anotaciones de conservación
-- Secuencia con anotaciones de conservación
+Pregunta de investigación, hipótesis y variables
+-----------------------------------------------
 
-## Flujo
-### 1. Búsqueda de secuencia homólogas
-Las secuencias homólogas a la secuencia input se obtienen a partir de un hmmsearch en la base de datos de Pfam. 
-### 2. Alineamiento de secuencia múltiple
-A partir de la secuencia y los mejores homólogos (se podría insertar un propio archivo de homología) se realiza el alineamiento con T-coffee o mafft. 
-### 3. Obtención de árbol filogenético
-A partir del MSA generado
-### 4. Cálculo de conservación utilizando Rate4Site
-### 5. Visualización en 3D 
-Las estructuras 3D se anotan con los resultados de Rate4Site utilizando Jmol. 
+**Pregunta de investigación**
+¿Puede un flujo automatizado combinar HMMER, InterProScan y análisis de conservación estructural para distinguir entre verdaderas cutinasas funcionales y proteínas cutinasa-like en proteomas diversos?
+
+**Hipótesis**
+La integración de detección por HMMER, anotación de dominios con InterProScan y análisis de conservación estructural permitirá diferenciar de manera confiable las cutinasas funcionales de las proteínas cutinasa-like, al combinar evidencia de similitud de secuencia, arquitectura de dominios y conservación de residuos catalíticos.
+
+
+Tabla de contenidos
+------------------
+- Descripción general
+- Convenciones de nombres y estructura de salida
+- Requisitos y dependencias
+- Instalación rápida y contenedores recomendados
+- Flujo (paso a paso) — comandos de ejemplo
+
+Descripción general
+------------------
+Entrada principal:
+- Uno o varios archivos FASTA de proteínas con extensión .faa
+- Un perfil HMM (.hmm) que define la familia o dominio a buscar
+Entrada adicional:
+- `ref_cutinases.fasta` (secuencias de referencia)
+  
+Salida esperada (por archivo .faa de entrada):
+- `<sample>_hits.txt` — tabla con resultados del HMMER
+- `<sample>_filtered_extracted.fasta` — secuencias del .faa cuyo e‑value es menor que el umbral dado
+- Directorio `<sample>_SignalP/` — resultados de SignalP 6
+- `<sample>_filtered_extracted_SignalP.fasta` — secuencias recortadas tras remover péptido señal, si procede
+- `<sample>_interpro.tsv` — salida tabular de InterProScan con dominios/familias
+- `<sample>_p_cutinase.fasta` — archivo final con secuencias que contienen dominio de cutinasa
+
+Requisitos y dependencias
+------------------------
+Herramientas principales:
+- HMMER (hmmsearch)
+- seqtk o samtools faidx / biopython (extracción/manipulación FASTA)
+- SignalP 6 (identificación de péptido señal)
+- InterProScan (identificación de dominios de cutinasas)
+- T-Coffee (para alineamientos múltiples)
+- ConSurf (instalación local)
+- awk / sed / grep / python (para parsing)
+
+Flujo detallado (paso a paso) y ejemplos de comandos
+--------------------------------------------------
+
+1) Búsqueda HMM — generar `<sample>_hits.txt`
+- Comando ejemplo (por cada archivo .faa):
+  - hmmsearch --domtblout sample.domtblout profile.hmm sample.faa > sample.hmmsearch.out
+  - NOTA: use `--domtblout` para hits por dominio o `--tblout` para hits por secuencia.
+- Extraer tabla legible (ejemplo genérico):
+  - awk '!/^#/ { print $1"\t"$4"\t"$7"\t"$13 }' sample.domtblout > sample_hits.txt
+  - (Ajuste columnas según formato de `domtblout`; revisar encabezados de HMMER)
+
+2) Filtrado por e‑value y extracción de secuencias — generar `_filtered_extracted.fasta`
+- Umbral de e‑value: puede introducirse en notación científica "1.10E-55".
+- Ejemplo (usando awk + seqtk):
+  - awk -v thr=1.10E-55 '$0 !~ /^#/ && $0 != "" { if ($13+0 < thr) print $1 }' sample.domtblout > ids_to_extract.txt
+    - (aquí $13 es un ejemplo; ajustar columna del e‑value según `domtblout`)
+  - seqtk subseq sample.faa ids_to_extract.txt > sample_filtered_extracted.fasta
+
+3) SignalP 6 — detectar y recortar péptidos señal
+- Con SignalP 6 instalado ejecutar:
+  - signalp6 -fasta sample_filtered_extracted.fasta -org gram- -format short -gff3 -outfile sample_signalp.out
+  - Parsear la salida para obtener posiciones de corte (cleavage site) y recortar secuencias:
+- Guardar resultados de SignalP en directorio: `mkdir -p sample_SignalP && mv sample_signalp.* sample_SignalP/`
+
+4) InterProScan — anotación de dominios/familias
+- Ejecutar InterProScan (local):
+  - interproscan.sh -i sample_filtered_extracted_SignalP.fasta -f tsv -o sample_interpro.tsv -dp
+- NOTA: InterProScan necesita bases de datos grandes y mucho tiempo; si no dispone de recursos, use la API del EBI con límites o ejecute en servidor/HPC.
+
+5) Filtrado por dominio "cutinase" — generar `_p_cutinase.fasta`
+- Identificar ID(s) asociados a cutinasa (por ejemplo Pfam o InterPro accesions). Debe confirmar el identificador exacto (ej.: PF01083, IPR##### — buscar en InterPro).
+- Extraer IDs con ese dominio desde `sample_interpro.tsv`:
+  - awk -F'\t' '$1 != "" && ($x ~ /CUTINASE_IDENTIFIER|cutinase/i) { print $1 }' sample_interpro.tsv | sort -u > ids_cutinase.txt
+    - (reemplazar condición con el acceso/ID correcto)
+  - seqtk subseq sample_filtered_extracted_SignalP.fasta ids_cutinase.txt > sample_p_cutinase.fasta
+
+MSAs por consulta
+---------------------------
+- Para cada consulta en `sample_p_cutinase.fasta`:
+  - Crear un FASTA que contenga la consulta + todas las ref_cutinases:
+    - for id in $(seqkit seq -n sample_p_cutinase.fasta); do seqkit grep -n -p "^$id\$" sample_p_cutinase.fasta > q.fa; cat ref_cutinases.fasta >> q.fa; mafft --auto q.fa > msa_${id}.fasta; done
+
+Modelado
+---------------------------
+El modelado se hará en web y no formará parte del pipeline, pero si del workflow
+
+ConSurf
+-------
+- ConSurf requiere: modelo PDB y un MSA.
+- Por cada consulta:
+  - Tener `model.pdb` (resultado de Swiss‑Model) y `msa_${id}.fasta`.
+  - Subir a ConSurf; ConSurf generará un directorio de resultados por trabajo.
+
+Formato de archivos y convenciones de nombres
+--------------------------------------------
+- Entradas:
+  - `<sample>.faa` — multi-FASTA, headers deben tener IDs únicos (evitar espacios o normalizarlos)
+  - `profile.hmm` — HMMER profile
+- Salidas (por sample):
+  - `<sample>_hits.txt` — tabla tabulada (ID, target, e-value, score, dominio, etc.)
+  - `<sample>_filtered_extracted.fasta`
+  - `<sample>_SignalP/` — archivos de SignalP
+  - `<sample>_filtered_extracted_SignalP.fasta`
+  - `<sample>_interpro.tsv`
+  - `<sample>_p_cutinase.fasta`
 
