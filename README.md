@@ -5,6 +5,57 @@ Resumen
 Este repositorio contiene la descripción de un pipeline bioinformático para identificar secuencias candidatas a cutinasas a partir de archivos FASTA de proteínas (.faa) y un perfil HMM (.hmm); filtrar por e‑valor; eliminar péptidos señal con SignalP 6; anotar dominios con InterProScan; seleccionar secuencias con dominio de cutinasa; preparar MSAs por consulta junto con secuencias de referencia y ejecutar ConSurf sobre modelos estructurales.  
 Este documento explica requisitos, convenciones de nombres, pasos, ejemplos de comandos y recomendaciones de despliegue.
 
+```mermaid
+flowchart TD
+
+    %% Entradas
+    A[Proteomas<br/>*.faa]:::input
+    B[Perfil HMM<br/>cutinase.hmm]:::input
+    C[Ref. cutinasas<br/>ref_cutinases.fasta]:::input
+    D[Modelos 3D (web)<br/>Swiss-Model / AlphaFold]:::ext
+
+    %% Paso 1: HMMER
+    A --> E[hmmsearch<br/>--domtblout]
+    B --> E
+    E --> F[<sample>.domtblout<br/><sample>_hits.txt]
+
+    %% Paso 2: Filtrado por e-value
+    F --> G[Filtrado por e-value<br/>+ extracción de IDs]
+    A --> G
+    G --> H[<sample>_filtered_extracted.fasta]
+
+    %% Paso 3: SignalP 6
+    H --> I[SignalP 6<br/>detección/recorte<br>péptido señal]
+    I --> J[<sample>_SignalP/]
+    I --> K[<sample>_filtered_extracted_SignalP.fasta]
+
+    %% Paso 4: InterProScan
+    K --> L[InterProScan<br/>anotación dominios]
+    L --> M[<sample>_interpro.tsv]
+
+    %% Paso 5: Filtrado por dominio cutinasa
+    M --> N[Filtrar por dominio<br/>cutinasa (Pfam/InterPro)]
+    K --> N
+    N --> O[<sample>_p_cutinase.fasta]
+
+    %% Paso 6: MSAs por consulta
+    O --> P[Construir FASTA<br/>consulta + ref_cutinases]
+    C --> P
+    P --> Q[MSA por consulta<br/>(MAFFT / T-Coffee)<br>msa_ID.fasta]
+
+    %% Paso 7: Modelado estructural (web)
+    O --> R[Modelado estructural<br/>(Swiss-Model / AlphaFold)]
+    R --> D
+
+    %% Paso 8: ConSurf
+    Q --> S[ConSurf<br/>modelo PDB + MSA]
+    D --> S
+    S --> T[Mapeo de conservación<br/>en estructura 3D]
+
+    classDef input fill:#e3f2fd,stroke:#1565c0,color:#0d47a1;
+    classDef ext fill:#f3e5f5,stroke:#6a1b9a,color:#4a148c;
+```
+
 Pregunta de investigación, hipótesis y objetivo
 -----------------------------------------------
 
