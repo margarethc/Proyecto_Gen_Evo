@@ -1,61 +1,7 @@
 #!/usr/bin/env bash
 
 ####################################################################################################
-# Script: run_signalp_cleave.sh
-# Author: (Your name)
-#
-# Description:
-#   This script runs SignalP 6 (slow-sequential model) on one or more protein FASTA files and:
-#       1. Detects signal peptides and their cleavage sites from SignalP GFF3 output.
-#       2. Generates a new FASTA file containing the **cleaved protein sequences**
-#          (only sequences that have a predicted signal peptide).
-#       3. Produces a summary table listing cleavage coordinates for each sequence.
-#       4. Saves raw SignalP outputs in a structured results folder.
-#
-# Input requirements:
-#   - Run this script from the directory:  GE_cut/
-#   - Input FASTA files must be inside the folder:  filtered_outputs/
-#   - Filenames should follow a format such as:
-#         sampleName_filtered.fasta
-#         sampleName_filtered.fa
-#         sampleName_filtered.faa
-#
-#     Example valid filenames:
-#         CAL9_filtered.fasta
-#         RUE08_filtered.faa
-#
-# Output generated for each input FASTA:
-#   1. signalp_results/<sampleName>/
-#        → Raw SignalP output files (including output.gff3)
-#
-#   2. <sampleName>_filtered_signalp.fasta
-#        → FASTA file with cleaved sequences (only sequences with signal peptides)
-#
-#   3. <sampleName>_signalP_summary.tsv
-#        → Table with the following columns:
-#             seqid              ID of the sequence (FASTA header first token)
-#             sp_start           Signal peptide start (1-based)
-#             sp_end             Signal peptide end (1-based)
-#             cleavage_after_aa  Position right after SP (cut position, 1-based)
-#             original_len       Length of the original protein
-#             new_len            Length after cleavage
-#
-# Usage:
-#   1. Activate your conda environment where SignalP 6 is installed:
-#
-#          conda activate GE_cut
-#
-#   2. Make sure your directory structure looks like this:
-#
-#          GE_cut/
-#          ├── run_signalp_cleave.sh
-#          ├── filtered_outputs/
-#          │      ├── CAL9_filtered.fasta
-#          │      ├── RUE08_filtered.faa
-#          │      └── FUSOX_filtered.fa
-#          └── signalp6/   (optional, where SignalP was installed)
-#
-#   3. Run the script from inside GE_cut/:
+# Run the script from inside GE_cut/:
 #
 #       a) Process **all** FASTA files in filtered_outputs/:
 #
@@ -69,21 +15,8 @@
 #
 #              ./run_signalp_cleave.sh CAL9_filtered.fasta RUE08_filtered.faa FUSOX_filtered.fa
 #
-#      For example, if your file is named "CAL9_filtered.fasta", after running:
 #
-#              ./run_signalp_cleave.sh CAL9_filtered.fasta
-#
-#      you will get:
-#
-#          CAL9_filtered_signalp.fasta        → cleaved sequences
-#          CAL9_signalP_summary.tsv           → cleavage table
-#          signalp_results/CAL9/              → raw SignalP outputs (GFF3, etc.)
-#
-# Notes:
-#   - The script uses the SignalP 6 CLI command:  signalp6
-#   - Only sequences with a predicted signal peptide are written to the cleaved FASTA.
-#   - Cleavage is performed immediately after the last residue of the signal peptide (SP end).
-#   - Works with any number of FASTA files.
+
 ####################################################################################################
 
 set -euo pipefail
