@@ -74,7 +74,7 @@ for fa in "${FILES_TO_PROCESS[@]}"; do
     ########################################
     signalp6 \
         --fastafile "$fa" \
-        --organism other \
+        --organism euk \
         --output_dir "$outdir" \
         --format none \
         --mode slow-sequential
