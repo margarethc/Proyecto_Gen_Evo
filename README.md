@@ -9,51 +9,49 @@ Este documento explica requisitos, convenciones de nombres, pasos, ejemplos de c
 flowchart TD
 
     %% Entradas
-    A[Proteomas<br/>*.faa]:::input
-    B[Perfil HMM<br/>cutinase.hmm]:::input
-    C[Ref. cutinasas<br/>ref_cutinases.fasta]:::input
-    D[Modelos 3D (web)<br/>Swiss-Model / AlphaFold]:::ext
+    A["Proteomas (*.faa)"]
+    B["Perfil HMM (cutinase.hmm)"]
+    C["Ref. cutinasas (ref_cutinases.fasta)"]
+    D["Modelos 3D (Swiss-Model / AlphaFold)"]
 
     %% Paso 1: HMMER
-    A --> E[hmmsearch<br/>--domtblout]
+    A --> E["hmmsearch --domtblout"]
     B --> E
-    E --> F[<sample>.domtblout<br/><sample>_hits.txt]
+    E --> F["<sample>.domtblout + <sample>_hits.txt"]
 
     %% Paso 2: Filtrado por e-value
-    F --> G[Filtrado por e-value<br/>+ extracción de IDs]
+    F --> G["Filtrado por e-value y extracción de IDs"]
     A --> G
-    G --> H[<sample>_filtered_extracted.fasta]
+    G --> H["<sample>_filtered_extracted.fasta"]
 
     %% Paso 3: SignalP 6
-    H --> I[SignalP 6<br/>detección/recorte<br>péptido señal]
-    I --> J[<sample>_SignalP/]
-    I --> K[<sample>_filtered_extracted_SignalP.fasta]
+    H --> I["SignalP 6 (detección/recorte péptido señal)"]
+    I --> J["<sample>_SignalP/"]
+    I --> K["<sample>_filtered_extracted_SignalP.fasta"]
 
     %% Paso 4: InterProScan
-    K --> L[InterProScan<br/>anotación dominios]
-    L --> M[<sample>_interpro.tsv]
+    K --> L["InterProScan (anotación de dominios)"]
+    L --> M["<sample>_interpro.tsv"]
 
     %% Paso 5: Filtrado por dominio cutinasa
-    M --> N[Filtrar por dominio<br/>cutinasa (Pfam/InterPro)]
+    M --> N["Filtrar por dominio cutinasa (Pfam / InterPro)"]
     K --> N
-    N --> O[<sample>_p_cutinase.fasta]
+    N --> O["<sample>_p_cutinase.fasta"]
 
     %% Paso 6: MSAs por consulta
-    O --> P[Construir FASTA<br/>consulta + ref_cutinases]
+    O --> P["Construir FASTA consulta + ref_cutinases"]
     C --> P
-    P --> Q[MSA por consulta<br/>(MAFFT / T-Coffee)<br>msa_ID.fasta]
+    P --> Q["MSA por consulta (MAFFT / T-Coffee)"]
 
     %% Paso 7: Modelado estructural (web)
-    O --> R[Modelado estructural<br/>(Swiss-Model / AlphaFold)]
+    O --> R["Modelado estructural (Swiss-Model / AlphaFold)"]
     R --> D
 
     %% Paso 8: ConSurf
-    Q --> S[ConSurf<br/>modelo PDB + MSA]
+    Q --> S["ConSurf (modelo PDB + MSA)"]
     D --> S
-    S --> T[Mapeo de conservación<br/>en estructura 3D]
+    S --> T["Conservación en estructura 3D"]
 
-    classDef input fill:#e3f2fd,stroke:#1565c0,color:#0d47a1;
-    classDef ext fill:#f3e5f5,stroke:#6a1b9a,color:#4a148c;
 ```
 
 Pregunta de investigación, hipótesis y objetivo
