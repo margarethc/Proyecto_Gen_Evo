@@ -1,76 +1,73 @@
 #!/usr/bin/env bash
 
 ####################################################################################################
-# Run the script from inside GE_cut/:
+# Script para ejecutar SignalP 6 sobre archivos FASTA de proteínas y extraer secuencias
+# después del péptido señal predicho (cleavage).  
 #
-#       a) Process **all** FASTA files in filtered_outputs/:
-#
-#              ./run_signalp_cleave.sh
-#
-#       b) Process **only one** specific file:
-#
-#              ./run_signalp_cleave.sh CAL9_filtered.fasta
-#
-#       c) Process **multiple selected** files:
-#
-#              ./run_signalp_cleave.sh CAL9_filtered.fasta RUE08_filtered.faa FUSOX_filtered.fa
-#
-#
-
+# Uso desde el directorio GE_cut/:
+#   a) Procesar todos los FASTA en filtered_outputs/:
+#        ./run_signalp_cleave.sh
+#   b) Procesar un archivo específico:
+#        ./run_signalp_cleave.sh CAL9_filtered.fasta
+#   c) Procesar múltiples archivos seleccionados:
+#        ./run_signalp_cleave.sh CAL9_filtered.fasta RUE08_filtered.faa FUSOX_filtered.fa
 ####################################################################################################
 
-set -euo pipefail
+set -euo pipefail  # Terminar si hay error, variables no definidas o errores en pipes
 
-# Directory with your filtered FASTA files
+# Carpeta que contiene los FASTA filtrados
 INPUT_DIR="filtered_outputs"
 
-# Base directory for SignalP outputs
+# Carpeta base donde se guardarán los resultados de SignalP
 RESULTS_BASE="signalp_results"
 mkdir -p "$RESULTS_BASE"
 
-# Determine which files to process:
-# - No arguments  → process all FASTA files in filtered_outputs/
-# - One or more   → process only the specified files (by name, inside filtered_outputs/)
+# -----------------------------
+# Determinar qué archivos procesar
+# -----------------------------
+# Sin argumentos -> todos los FASTA en filtered_outputs/
+# Con argumentos -> solo los archivos especificados
 if [ "$#" -eq 0 ]; then
-    # No arguments: process all FASTA-like files
     FILES_TO_PROCESS=("$INPUT_DIR"/*.fasta "$INPUT_DIR"/*.fa "$INPUT_DIR"/*.faa)
 else
-    # User provided one or more filenames
     FILES_TO_PROCESS=()
     for arg in "$@"; do
         fa="$INPUT_DIR/$arg"
         if [ ! -f "$fa" ]; then
-            echo "ERROR: File '$arg' not found in $INPUT_DIR/"
+            echo "ERROR: Archivo '$arg' no encontrado en $INPUT_DIR/"
             exit 1
         fi
         FILES_TO_PROCESS+=("$fa")
     done
 fi
 
-processed_any=false
+processed_any=false  # Bandera para saber si se procesó al menos un archivo
 
+# -----------------------------
+# Bucle principal: procesar cada archivo FASTA
+# -----------------------------
 for fa in "${FILES_TO_PROCESS[@]}"; do
-    # Handle the case when the glob didn't match anything in "all files" mode
+    # Saltar si el glob no encontró coincidencias
     if [ ! -e "$fa" ]; then
         continue
     fi
 
     processed_any=true
 
-    fname=$(basename "$fa")            # e.g. CAL9_filtered.fasta
-    base_noext="${fname%%.*}"         # e.g. CAL9_filtered
-    core="${base_noext%_filtered}"    # e.g. CAL9  (removes "_filtered" if present)
+    fname=$(basename "$fa")            # Nombre del archivo, ej: CAL9_filtered.fasta
+    base_noext="${fname%%.*}"         # Sin extensión, ej: CAL9_filtered
+    core="${base_noext%_filtered}"    # Quita "_filtered", ej: CAL9
 
     echo "==============================================="
-    echo "Processing file: $fa"
-    echo "  Sample name:   $core"
+    echo "Procesando archivo: $fa"
+    echo "  Nombre de muestra: $core"
 
-    # Per-sample output directory for SignalP raw outputs
+    # Carpeta de salida específica para cada muestra
     outdir="$RESULTS_BASE/$core"
     mkdir -p "$outdir"
 
     ########################################
-    # 1) Run SignalP 6 (slow-sequential)
+    # 1) Ejecutar SignalP 6 (modo slow-sequential)
     ########################################
     signalp6 \
         --fastafile "$fa" \
@@ -82,39 +79,37 @@ for fa in "${FILES_TO_PROCESS[@]}"; do
     gff="$outdir/output.gff3"
 
     if [ ! -f "$gff" ]; then
-        echo "  WARNING: No output.gff3 found for $fa, skipping cleavage step."
+        echo "  ADVERTENCIA: No se encontró output.gff3 para $fa, se omite paso de corte."
         continue
     fi
 
     ########################################
-    # 2) Extract SP coordinates from GFF3
+    # 2) Extraer coordenadas de péptido señal del GFF3
     ########################################
     tmp_table=$(mktemp)
 
-    # GFF3: seqid (col1), feature type (col3), start (col4), end (col5)
-    # We keep only feature type "signal_peptide"
+    # Filtra solo las líneas que corresponden a "signal_peptide"
+    # Columnas: seqid (col1), tipo de feature (col3), inicio (col4), fin (col5)
     awk -F'\t' '
         $0 !~ /^#/ && $3 == "signal_peptide" {
             print $1 "\t" $4 "\t" $5
         }
     ' "$gff" > "$tmp_table"
 
-    # If no signal peptides found, skip this file
+    # Si no se detectan péptidos señal, saltar este archivo
     if [ ! -s "$tmp_table" ]; then
-        echo "  No signal peptides detected in $fa."
+        echo "  No se detectaron péptidos señal en $fa."
         rm -f "$tmp_table"
         continue
     fi
 
     ########################################
-    # 3) Create cleaved FASTA + per-sample summary
+    # 3) Crear FASTA cleavado + resumen
     ########################################
-    # Output FASTA: e.g. CAL9_filtered_signalp.fasta
-    cleaved_fasta="${base_noext}_signalp.fasta"
+    cleaved_fasta="${base_noext}_signalp.fasta"  # FASTA con secuencias cleavadas
+    summary_file="${core}_signalP_summary.tsv"   # Resumen de coordenadas
 
-    # Summary file: e.g. CAL9_signalP_summary.tsv
-    summary_file="${core}_signalP_summary.tsv"
-
+    # Código Python embebido para procesar el FASTA y crear salida
     python <<PY
 import textwrap
 
@@ -123,8 +118,7 @@ table_path = "$tmp_table"
 out_fasta_path = "$cleaved_fasta"
 summary_path = "$summary_file"
 
-# Load cleavage positions
-# table has: seqid \t sp_start \t sp_end
+# Cargar posiciones de corte
 cleavage = {}
 with open(table_path) as t:
     for line in t:
@@ -132,10 +126,10 @@ with open(table_path) as t:
         if not line:
             continue
         seqid, sp_start, sp_end = line.split("\t")
-        # If there are multiple SP entries for the same seqid, keep the first
         if seqid not in cleavage:
             cleavage[seqid] = (int(sp_start), int(sp_end))
 
+# Función para leer FASTA
 def read_fasta(path):
     header_id = None
     header_full = None
@@ -148,53 +142,50 @@ def read_fasta(path):
             if line.startswith(">"):
                 if header_id is not None:
                     yield header_id, header_full, "".join(seq_lines)
-                header_full = line[1:]              # full header (without '>')
-                header_id = header_full.split()[0]  # ID = first token
+                header_full = line[1:]
+                header_id = header_full.split()[0]
                 seq_lines = []
             else:
                 seq_lines.append(line)
     if header_id is not None:
         yield header_id, header_full, "".join(seq_lines)
 
+# Abrir archivos de salida
 with open(out_fasta_path, "w") as out_fa, open(summary_path, "w") as out_sum:
     out_sum.write("seqid\tsp_start\tsp_end\tcleavage_after_aa\toriginal_len\tnew_len\n")
 
     for sid, full_header, seq in read_fasta(fasta_path):
         if sid not in cleavage:
-            # No signal peptide predicted for this sequence
             continue
 
         sp_start, sp_end = cleavage[sid]
-        # Cleavage is AFTER the last AA of the signal peptide
-        cut_pos = sp_end  # 1-based index
-        # Python string is 0-based, so new sequence starts at cut_pos
-        new_seq = seq[cut_pos:]
+        cut_pos = sp_end  # índice 1-based
+        new_seq = seq[cut_pos:]  # cortar SP
 
         if len(new_seq) == 0:
-            # Resulting sequence empty → skip
             continue
 
-        # Write cleaved sequence to FASTA, keep original header but mark as cleaved
+        # Escribir secuencia cleavada
         out_fa.write(f">{full_header} | signalp_cleaved\n")
         for chunk in textwrap.wrap(new_seq, 60):
             out_fa.write(chunk + "\n")
 
-        # Write summary line
-        out_sum.write(
-            f"{sid}\t{sp_start}\t{sp_end}\t{cut_pos}\t{len(seq)}\t{len(new_seq)}\n"
-        )
+        # Escribir línea de resumen
+        out_sum.write(f"{sid}\t{sp_start}\t{sp_end}\t{cut_pos}\t{len(seq)}\t{len(new_seq)}\n")
 PY
 
+    # Limpiar archivo temporal
     rm -f "$tmp_table"
 
-    echo "  -> Cleaved FASTA: $cleaved_fasta"
-    echo "  -> Summary file:  $summary_file"
-    echo "  -> Raw SignalP outputs in: $outdir"
+    echo "  -> FASTA cleavado: $cleaved_fasta"
+    echo "  -> Archivo resumen: $summary_file"
+    echo "  -> Resultados crudos en: $outdir"
 done
 
+# Mensaje si no se procesó ningún archivo
 if [ "$processed_any" = false ]; then
-    echo "No FASTA files were processed. Check that filtered_outputs/ contains .fasta/.fa/.faa files,"
-    echo "or that the filenames you provided as arguments exist in that folder."
+    echo "No se procesaron archivos FASTA. Verifique que filtered_outputs/ contenga .fasta/.fa/.faa"
+    echo "o que los nombres proporcionados como argumentos existan en esa carpeta."
 fi
 
-echo "Done."
+echo "Proceso completado."
