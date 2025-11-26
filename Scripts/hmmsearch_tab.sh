@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 # -----------------------------------------------------------------------------------
 # Script: hmmsearch_tab.sh
-# Autor: (Tu nombre)
-#
-# Descripción:
-#   Este script ejecuta HMMER (hmmsearch) usando un perfil HMM (*.hmm) contra uno o más
-#   archivos de proteínas (*.faa / *.fasta) y genera un archivo tabulado (*_hits.txt)
-#   por cada archivo de proteínas. Cada fila corresponde a un dominio detectado.
 #
 # Uso:
 #   ./hmmsearch_tab.sh modelo.hmm prot1.fasta prot2.faa ...
@@ -79,11 +73,6 @@ default_out_from_protein() {
 
   base=$(basename "$p")  # Extrae nombre de archivo sin ruta
   tmpname="$base"
-
-  # Si está comprimido (.gz), eliminar extensión
-  if [[ "$tmpname" == *.gz ]]; then
-    tmpname="${tmpname%.gz}"
-  fi
 
   # Quita la extensión final (.fasta, .faa)
   name="${tmpname%.*}"
