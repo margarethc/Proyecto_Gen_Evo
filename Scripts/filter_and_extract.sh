@@ -92,23 +92,6 @@ if [ $(( $# % 2 )) -ne 0 ]; then
 fi
 
 # -----------------------------------------------------------------------------------
-# Función helper para leer archivos posiblemente gzipped
-# -----------------------------------------------------------------------------------
-read_stream_cmd() {
-  local f="$1"
-  if [[ "$f" == *.gz ]]; then
-    # Usar gzip -dc si está disponible, sino zcat
-    if command -v gzip >/dev/null 2>&1; then
-      printf "gzip -dc %q" "$f"
-    else
-      printf "zcat %q" "$f"
-    fi
-  else
-    printf "cat %q" "$f"
-  fi
-}
-
-# -----------------------------------------------------------------------------------
 # Loop sobre pares de archivos: hits + protein
 # -----------------------------------------------------------------------------------
 while [ "$#" -gt 0 ]; do
@@ -173,7 +156,7 @@ while [ "$#" -gt 0 ]; do
   fi
 
   # ---------------------------------------------------------------------------------
-  # Extraer secuencias correspondientes de archivo FASTA (soporta gz)
+  # Extraer secuencias correspondientes de archivo FASTA
   # ---------------------------------------------------------------------------------
   if [[ "$PROTEIN" == *.gz ]]; then
     eval "$(read_stream_cmd "$PROTEIN")" | \
