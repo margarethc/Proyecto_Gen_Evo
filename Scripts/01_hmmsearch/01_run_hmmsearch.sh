@@ -9,11 +9,11 @@
 # Salidas (por proteoma <sample>):
 #   results/01_hmmsearch/<sample>/
 #     ├── <sample>.domtblout
-#     ├── <sample>_hmmsearch.out        (opcional, log de hmmsearch)
+#     ├── <sample>_hmmsearch.out        
 #     └── <sample>_hits.tsv             (tabla legible por dominio)
 # ------------------------------------------------------------------------------
 
-set -euo pipefail
+set -euo pipefail #si un comando falla o no hay variables el script se detiene
 
 usage() {
   cat <<EOF >&2
@@ -41,27 +41,30 @@ if ! command -v hmmsearch >/dev/null 2>&1; then
 fi
 
 # Root del proyecto = carpeta actual (recomendado ejecutar desde cutinasas_pipeline/)
-# Si prefieres hacerlo más robusto, luego lo conectamos a scripts/00_utils/config.sh
+#Se define la ruta del proyecto y la carpeta de resultados
+#Si se ejecuta de otro root, el pipeline se rompe!!!
 PIPE_ROOT="$(pwd)"
 RESULTS_DIR="${PIPE_ROOT}/results/01_hmmsearch"
 
 mkdir -p "$RESULTS_DIR"
 
+#En caso que uno de los proteomas indicados no exista, el siguiente loop permite su omisión
 for PROTEIN in "$@"; do
   if [ ! -f "$PROTEIN" ]; then
     echo "Advertencia: archivo de proteínas no encontrado, se omite: $PROTEIN" >&2
     continue
   fi
 
-  base=$(basename "$PROTEIN")
-  # quita .gz si existiera
-  base="${base%.gz}"
-  # quita extensión final (.faa/.fasta/.fa/.fna etc.)
+# DETERMINAR EL NOMBRE DE LA MUESTRA Y ARCHIVOS (trazabilidad)
+  base=$(basename "$PROTEIN") # quita .gz si existiera
+  base="${base%.gz}" # quita extensión final (.faa/.fasta/.fa/.fna etc.)
   sample="${base%.*}"
 
+# CREAR UNA CARPETA POR MUESTRA
   outdir="${RESULTS_DIR}/${sample}"
   mkdir -p "$outdir"
-
+  
+# NOMBRES DE OUTPUTS
   domtbl="${outdir}/${sample}.domtblout"
   hmmout="${outdir}/${sample}_hmmsearch.out"
   hits_tsv="${outdir}/${sample}_hits.tsv"
@@ -70,14 +73,18 @@ for PROTEIN in "$@"; do
   echo "    domtblout: $domtbl"
   echo "    hits_tsv : $hits_tsv"
 
-  # Ejecuta hmmsearch y guarda stdout (útil como log)
-  # Si no quieres el log, cambia: > /dev/null 2>&1
+  #################
+  EJECUTA HMMSEARCH
+  #################
+  
   if ! hmmsearch --domtblout "$domtbl" "$MODEL" "$PROTEIN" >"$hmmout" 2>&1; then
     echo "hmmsearch falló para $PROTEIN. Revisa: $hmmout" >&2
     continue
   fi
 
-  # Parseo domtblout -> tabla legible por dominio
+  #################
+  Parseo domtblout -> tabla legible por dominio
+  #################
   {
     echo -e "query_name\ttarget_name\tdomain_iEvalue\tdomain_bitscore\tfullseq_Evalue\tfullseq_bitscore\thmm_from\thmm_to\tali_from\tali_to\tacc\ttarget_description"
     grep -v '^#' "$domtbl" | awk 'BEGIN{OFS="\t"}{
