@@ -1,0 +1,96 @@
+{
+  "INFO": {
+    "failedjobs": 0,
+    "size": 5
+  },
+  "CSV_FILE": "/home/margaret/cutinasas_pipeline/results/02_signalp/fus_oxy/fus_oxy_signalp_out/prediction_results.txt",
+  "MATURE_FILE": "/home/margaret/cutinasas_pipeline/results/02_signalp/fus_oxy/fus_oxy_signalp_out/processed_entries.fasta",
+  "GFF_FILE": "/home/margaret/cutinasas_pipeline/results/02_signalp/fus_oxy/fus_oxy_signalp_out/output.gff3",
+  "ZIP_FILE": "",
+  "SEQUENCES": {
+    "QKD48196.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]": {
+      "Name": "QKD48196.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]",
+      "Plot_eps": "",
+      "Plot_png": "",
+      "Plot_txt": "",
+      "Prediction": "Signal Peptide (Sec/SPI)",
+      "Likelihood": [
+        0.0003,
+        0.9997
+      ],
+      "Protein_types": [
+        "Other",
+        "Signal Peptide (Sec/SPI)"
+      ],
+      "CS_pos": "Cleavage site between pos. 22 and 23. Probability 0.936343"
+    },
+    "QKD53817.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]": {
+      "Name": "QKD53817.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]",
+      "Plot_eps": "",
+      "Plot_png": "",
+      "Plot_txt": "",
+      "Prediction": "Signal Peptide (Sec/SPI)",
+      "Likelihood": [
+        0.0002,
+        0.9998
+      ],
+      "Protein_types": [
+        "Other",
+        "Signal Peptide (Sec/SPI)"
+      ],
+      "CS_pos": "Cleavage site between pos. 35 and 36. Probability 0.431005"
+    },
+    "QKD60954.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]": {
+      "Name": "QKD60954.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]",
+      "Plot_eps": "",
+      "Plot_png": "",
+      "Plot_txt": "",
+      "Prediction": "Signal Peptide (Sec/SPI)",
+      "Likelihood": [
+        0.0002,
+        0.9998
+      ],
+      "Protein_types": [
+        "Other",
+        "Signal Peptide (Sec/SPI)"
+      ],
+      "CS_pos": "Cleavage site between pos. 29 and 30. Probability 0.633979"
+    },
+    "QKD61503.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]": {
+      "Name": "QKD61503.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]",
+      "Plot_eps": "",
+      "Plot_png": "",
+      "Plot_txt": "",
+      "Prediction": "Signal Peptide (Sec/SPI)",
+      "Likelihood": [
+        0.0002,
+        0.9998
+      ],
+      "Protein_types": [
+        "Other",
+        "Signal Peptide (Sec/SPI)"
+      ],
+      "CS_pos": "Cleavage site between pos. 25 and 26. Probability 0.971867"
+    },
+    "QKD62814.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]": {
+      "Name": "QKD62814.1 cutinase-domain-containing protein [Fusarium oxysporum Fo47]",
+      "Plot_eps": "",
+      "Plot_png": "",
+      "Plot_txt": "",
+      "Prediction": "Signal Peptide (Sec/SPI)",
+      "Likelihood": [
+        0.0002,
+        0.9998
+      ],
+      "Protein_types": [
+        "Other",
+        "Signal Peptide (Sec/SPI)"
+      ],
+      "CS_pos": "Cleavage site between pos. 25 and 26. Probability 0.441543"
+    }
+  },
+  "FORMAT": "none",
+  "ORG": "eukarya",
+  "MODE": "slow-sequential",
+  "REGION_GFF_FILE": "/home/margaret/cutinasas_pipeline/results/02_signalp/fus_oxy/fus_oxy_signalp_out/region_output.gff3"
+}
