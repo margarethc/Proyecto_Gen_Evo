@@ -102,6 +102,8 @@ Herramientas principales:
 
 Directorio
 ----------
+```text
+<estructura>
 cutinasas_pipeline/
 
 ├── data/
@@ -181,6 +183,7 @@ cutinasas_pipeline/
     ├── cutinase_pipe.yml
     └── signalp6.yml
 
+```
 
 Flujo detallado (paso a paso) y ejemplos de comandos
 --------------------------------------------------
