@@ -1,0 +1,36 @@
+#                                                                            --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name        accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+Cutinase             PF01083.28   173 QKD48196.1           -            334   5.7e-53  179.8   4.9   1   1   1.8e-56   7.3e-53  179.5   4.9     2   173   164   333   163   333 0.96 Cutinase
+VirJ                 PF06057.17   191 QKD48196.1           -            334    0.0062   16.9   0.0   1   1   2.3e-06    0.0096   16.3   0.0    51   100   226   275   197   282 0.89 Bacterial virulence protein (VirJ)
+PE-PPE               PF08237.17   228 QKD48196.1           -            334     0.024   14.5   0.1   1   1   8.4e-06     0.035   14.0   0.1    38    95   232   283   203   298 0.71 PE-PPE domain
+RE_HindIII           PF09518.16   285 QKD48196.1           -            334     0.054   13.2   0.0   1   1   1.8e-05     0.075   12.7   0.0   130   184   205   268   200   285 0.85 HindIII restriction endonuclease
+Abhydrolase_2        PF02230.22   217 QKD48196.1           -            334     0.074   13.3   0.0   1   1   2.7e-05      0.11   12.7   0.0    99   134   236   275   218   287 0.77 Phospholipase/Carboxylesterase
+Mbeg1-like           PF11187.14   224 QKD48196.1           -            334     0.098   12.5   0.1   1   1   3.4e-05      0.14   12.0   0.1    69   128   226   286   216   297 0.84 Mbeg1-like
+Cutinase             PF01083.28   173 QKD53817.1           -            199   1.8e-53  181.5   0.0   1   1   1.6e-57     2e-53  181.3   0.0     1   172    17   193    17   194 0.98 Cutinase
+Abhydrolase_2        PF02230.22   217 QKD53817.1           -            199      0.04   14.2   0.0   1   1   4.3e-06     0.053   13.8   0.0   101   128    94   122    77   142 0.75 Phospholipase/Carboxylesterase
+Cutinase             PF01083.28   173 QKD60954.1           -            201   2.5e-54  184.2   0.1   1   1   1.2e-58   2.9e-54  184.1   0.1     1   172    18   194    18   195 0.99 Cutinase
+Cutinase             PF01083.28   173 QKD61503.1           -            206   1.5e-43  149.2   0.0   1   1   3.5e-47   1.7e-43  149.0   0.0     2   172    29   203    28   204 0.98 Cutinase
+PE-PPE               PF08237.17   228 QKD61503.1           -            206    0.0047   16.8   0.0   1   1   1.2e-06    0.0059   16.5   0.0    21    72    83   132    63   149 0.85 PE-PPE domain
+VirJ                 PF06057.17   191 QKD61503.1           -            206    0.0085   16.4   0.0   1   1   2.4e-06     0.012   16.0   0.0    47   107    89   149    78   158 0.87 Bacterial virulence protein (VirJ)
+DUF3089              PF11288.14   207 QKD61503.1           -            206     0.045   13.7   0.0   1   1   1.3e-05     0.062   13.3   0.0    92   134   107   147    87   158 0.83 Protein of unknown function (DUF3089)
+Hydrolase_4          PF12146.15   239 QKD61503.1           -            206      0.17   11.6   0.0   1   1   4.7e-05      0.23   11.1   0.0    55   115    88   148    85   158 0.90 Serine aminopeptidase, S33
+Cutinase             PF01083.28   173 QKD62814.1           -            237     1e-39  136.7   0.5   1   1   7.4e-43     2e-39  135.7   0.5     1   155    45   198    45   233 0.92 Cutinase
+Abhydrolase_11       PF20408.4    193 QKD62814.1           -            237   0.00067   19.9   0.1   1   1   3.6e-07     0.001   19.3   0.1    63   119   112   176    96   182 0.81 Alpha/beta hydrolase domain
+VirJ                 PF06057.17   191 QKD62814.1           -            237    0.0037   17.6   0.0   1   1   1.9e-06    0.0053   17.1   0.0    47   105   107   165    75   180 0.84 Bacterial virulence protein (VirJ)
+PE-PPE               PF08237.17   228 QKD62814.1           -            237    0.0068   16.3   0.0   1   1   3.5e-06    0.0096   15.8   0.0    29   100   105   173    88   183 0.74 PE-PPE domain
+DUF3089              PF11288.14   207 QKD62814.1           -            237     0.011   15.7   0.0   1   1     6e-06     0.017   15.1   0.0    93   150   126   182    98   194 0.82 Protein of unknown function (DUF3089)
+Abhydrolase_1        PF00561.26   245 QKD62814.1           -            237     0.067   13.3   0.0   1   1   3.7e-05       0.1   12.7   0.0    53   102   111   164    93   179 0.87 alpha/beta hydrolase fold
+Abhydrolase_3        PF07859.19   210 QKD62814.1           -            237     0.071   13.3   0.0   1   1   3.7e-05       0.1   12.8   0.0    54   108   111   165    64   189 0.79 alpha/beta hydrolase fold
+Mbeg1-like           PF11187.14   224 QKD62814.1           -            237      0.11   12.4   0.2   1   1   5.6e-05      0.15   11.9   0.2    68   119   110   162   102   173 0.89 Mbeg1-like
+Abhydrolase_2        PF02230.22   217 QKD62814.1           -            237      0.13   12.6   0.0   1   1   6.2e-05      0.17   12.1   0.0    85   126   108   148    89   194 0.76 Phospholipase/Carboxylesterase
+#
+# Program:         hmmscan
+# Version:         3.4 (Aug 2023)
+# Pipeline mode:   SCAN
+# Query file:      /home/margaret/cutinasas_pipeline/results/02_signalp/fus_oxy/fus_oxy_signalp_trimmed.fasta
+# Target file:     /home/margaret/cutinasas_pipeline/databases/pfam/Pfam-A.hmm
+# Option settings: hmmscan --domtblout /home/margaret/cutinasas_pipeline/results/03_pfam/fus_oxy/fus_oxy_pfam.domtblout --cpu 4 /home/margaret/cutinasas_pipeline/databases/pfam/Pfam-A.hmm /home/margaret/cutinasas_pipeline/results/02_signalp/fus_oxy/fus_oxy_signalp_trimmed.fasta 
+# Current dir:     /home/margaret/cutinasas_pipeline
+# Date:            Tue Dec 23 16:39:48 2025
+# [ok]
