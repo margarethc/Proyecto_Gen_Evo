@@ -2,7 +2,7 @@
 
 Resumen
 -------
-Este repositorio contiene la descripción de un pipeline bioinformático para identificar secuencias candidatas a cutinasas a partir de archivos FASTA de proteínas (.faa) y un perfil HMM (.hmm); filtrar por e‑valor; eliminar péptidos señal con SignalP 6; anotar dominios con InterProScan; seleccionar secuencias con dominio de cutinasa; preparar MSAs por consulta junto con secuencias de referencia y ejecutar ConSurf sobre modelos estructurales.  
+Este repositorio contiene la descripción de un pipeline bioinformático para identificar secuencias candidatas a cutinasas a partir de archivos FASTA de proteínas (.faa) y un perfil HMM (.hmm); filtrar por e‑valor; eliminar péptidos señal con SignalP 6; anotar dominios con PFam; seleccionar secuencias con dominio de cutinasa y preparar MSAs por consulta junto con secuencias de referencia, para su uso posterior en ConSurf y en el modelado de estructuras.  
 Este documento explica requisitos, convenciones de nombres, pasos, ejemplos de comandos y recomendaciones de despliegue.
 
 ```mermaid
@@ -29,12 +29,12 @@ flowchart TD
     I --> J["<sample>_SignalP/"]
     I --> K["<sample>_filtered_extracted_SignalP.fasta"]
 
-    %% Paso 4: InterProScan
-    K --> L["InterProScan (anotación de dominios)"]
-    L --> M["<sample>_interpro.tsv"]
+    %% Paso 4: PFam
+    K --> L["PFam (anotación de dominios)"]
+    L --> M["<sample>_dominios.tsv"]
 
     %% Paso 5: Filtrado por dominio cutinasa
-    M --> N["Filtrar por dominio cutinasa (Pfam / InterPro)"]
+    M --> N["Filtrar por dominio cutinasa (Pfam)"]
     K --> N
     N --> O["<sample>_p_cutinase.fasta"]
 
@@ -47,7 +47,7 @@ flowchart TD
     O --> R["Modelado estructural (Swiss-Model / AlphaFold)"]
     R --> D
 
-    %% Paso 8: ConSurf
+    %% Paso 8: ConSurf (Web / Google Collab)
     Q --> S["ConSurf (modelo PDB + MSA)"]
     D --> S
     S --> T["Conservación en estructura 3D"]
@@ -58,13 +58,13 @@ Pregunta de investigación, hipótesis y objetivo
 -----------------------------------------------
 
 **Pregunta de investigación**
-¿Puede un flujo automatizado combinar HMMER, InterProScan y análisis de conservación estructural para distinguir entre verdaderas cutinasas funcionales y proteínas cutinasa-like en proteomas diversos?
+¿Puede un flujo automatizado combinar HMMER, PFam y análisis de conservación estructural para distinguir entre verdaderas cutinasas funcionales y proteínas cutinasa-like en proteomas diversos?
 
 **Hipótesis**
 La integración de detección por HMMER, anotación de dominios con InterProScan y análisis de conservación estructural permitirá diferenciar de manera confiable las cutinasas funcionales de las proteínas cutinasa-like, al combinar evidencia de similitud de secuencia, arquitectura de dominios y conservación de residuos catalíticos.
 
 **Objetivo**
-Desarrollar y evaluar un pipeline automatizado que integre HMMER, InterProScan y análisis de conservación estructural para discriminar entre cutinasas funcionales y proteínas cutinasa-like en proteomas diversos.
+Desarrollar y evaluar un pipeline automatizado que integre HMMER, PFam y análisis de conservación estructural para discriminar entre cutinasas funcionales y proteínas cutinasa-like en proteomas diversos.
 
 Tabla de contenidos
 ------------------
@@ -96,10 +96,91 @@ Herramientas principales:
 - HMMER (hmmsearch)
 - seqtk o samtools faidx / biopython (extracción/manipulación FASTA)
 - SignalP 6 (identificación de péptido señal)
-- InterProScan (identificación de dominios de cutinasas)
-- T-Coffee (para alineamientos múltiples)
-- ConSurf (instalación local)
+- PFam (identificación de dominios de cutinasas)
+- MAFFT (para alineamientos múltiples)
 - awk / sed / grep / python (para parsing)
+
+Directorio
+----------
+cutinasas_pipeline/
+
+├── data/
+│   ├── proteomes/
+│   │   ├── fus_oxy.faa
+│   │   └── *.faa / *.fasta
+│   │
+│   ├── hmm_model/
+│   │   └── cutinase.hmm
+│   │
+│   └── references/
+│       └── ref_cutinases.fasta
+│
+├── databases/
+│   ├── pfam/
+│   │   ├── Pfam-A.hmm
+│   │   ├── Pfam-A.hmm.h3f
+│   │   ├── Pfam-A.hmm.h3i
+│   │   ├── Pfam-A.hmm.h3m
+│   │   └── Pfam-A.hmm.h3p
+│   └── (otras DBs si aplica)
+│
+├── scripts/
+│   ├── 01_hmmsearch/
+│   │   ├── 01_run_hmmsearch.sh
+│   │   └── 02_filter_extract_fasta.sh
+│   │
+│   ├── 02_signalp/
+│   │   └── 01_run_signalp_cleave.sh
+│   │
+│   ├── 03_pfam/
+│   │   └── 01_run_pfam_select_cutinase.sh
+│   │
+│   ├── 04_msa/
+│   │   └── 01_make_msas_per_hit.sh
+│   │
+│   ├── 05_summary/
+│   │   └── build_summary_csv.py
+│   │
+│   └── run_pipeline_master.sh
+│
+├── results/
+│   ├── 01_hmmsearch/
+│   │   └── <sample>/
+│   │       ├── <sample>.domtblout *
+│   │       ├── <sample>_hmmsearch.out
+│   │       ├── <sample>_hits.tsv
+│   │       ├── <sample>_ids_evalue.txt
+│   │       └── <sample>_hits_filtered.fasta *
+│   │
+│   ├── 02_signalp/
+│   │   └── <sample>/
+│   │       ├── <sample>_signalp_out/
+│   │       │   └── output.gff3
+│   │       ├── <sample>_signalP_summary.tsv *
+│   │       ├── <sample>_signalp_trimmed.fasta *
+│   │       └── <sample>_signalp_noSP.fasta
+│   │
+│   ├── 03_pfam/
+│   │   └── <sample>/
+│   │       ├── <sample>_pfam.domtblout *
+│   │       ├── <sample>_pfam.hmmscan.out
+│   │       ├── <sample>_pfam_cutinase_ids.txt
+│   │       └── <sample>_pfam_filtered.fasta *
+│   │
+│   ├── 04_msa/
+│   │   └── <sample>/
+│   │       ├── <sample>_query_plus_refs/
+│   │       │   └── <hit>.fasta
+│   │       └── <sample>_alignments/ *
+│   │           └── <hit>_aln.fas
+│   │
+│   └── summary/
+│       └── cutinase_candidates_summary.csv
+│
+└── environments/
+    ├── cutinase_pipe.yml
+    └── signalp6.yml
+
 
 Flujo detallado (paso a paso) y ejemplos de comandos
 --------------------------------------------------
