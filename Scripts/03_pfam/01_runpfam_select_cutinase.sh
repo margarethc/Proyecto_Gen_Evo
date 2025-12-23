@@ -49,14 +49,14 @@ done
 
 PIPE_ROOT="$(pwd)"
 
-# Entrada: SOLO secretadas
+# Entrada: SOLO secretadas (con péptido señal)
 IN_FASTA="${PIPE_ROOT}/results/02_signalp/${SAMPLE}/${SAMPLE}_signalp_trimmed.fasta"
 if [ ! -f "$IN_FASTA" ]; then
   echo "ERROR: No encuentro el FASTA secretado: $IN_FASTA" >&2
   exit 1
 fi
 
-# DB Pfam (ajusta si tu ruta real difiere)
+# Uso de la base de datos de PFam
 PFAM_HMM="${PIPE_ROOT}/databases/pfam/Pfam-A.hmm"
 if [ ! -f "$PFAM_HMM" ]; then
   # fallback por si lo tienes directo en databases/
@@ -68,18 +68,20 @@ if [ ! -f "$PFAM_HMM" ]; then
 fi
 
 if ! command -v hmmscan >/dev/null 2>&1; then
-  echo "ERROR: hmmscan no está en PATH (instala HMMER en este env)." >&2
+  echo "ERROR: hmmscan no está en PATH!!" >&2
   exit 1
 fi
 
 if ! command -v seqkit >/dev/null 2>&1; then
-  echo "ERROR: seqkit no está en PATH (instala seqkit en este env)." >&2
+  echo "ERROR: seqkit no está en PATH!!" >&2
   exit 1
 fi
 
+#Se define el directorio para los outputs
 OUTDIR="${PIPE_ROOT}/results/03_pfam/${SAMPLE}"
 mkdir -p "$OUTDIR"
 
+#Se define los nombres de los outputs
 DOMTBL="${OUTDIR}/${SAMPLE}_pfam.domtblout"
 HMMOUT="${OUTDIR}/${SAMPLE}_pfam.hmmscan.out"
 IDS="${OUTDIR}/${SAMPLE}_pfam_cutinase_ids.txt"
@@ -97,13 +99,13 @@ hmmscan --cpu "$CPU" \
   --domtblout "$DOMTBL" \
   "$PFAM_HMM" "$IN_FASTA" > "$HMMOUT"
 
-# 2) filtrar hits por Pfam accession (col 2 en domtblout suele ser el accession del HMM, ej PF01083.XX)
+# 2) filtrar hits por Pfam accession
 # domtblout: $1=target name, $2=target accession, $4=query name
 awk -v pf="$PFAM_ID" '
   $0 ~ /^#/ { next }
   {
     acc=$2
-    sub(/\..*/, "", acc)   # PF01083.23 -> PF01083
+    sub(/\..*/, "", acc)   # PF01083.23 -> PF01083 # Dominio para cutinasas!!
     if (acc == pf) print $4
   }
 ' "$DOMTBL" | sort -u > "$IDS"
@@ -115,12 +117,13 @@ if [ "$idcount" -eq 0 ]; then
   exit 0
 fi
 
-# 3) extraer del FASTA secretado las secuencias que tienen el dominio
+# 3) se  extrae del FASTA secretado las secuencias que tienen el dominio
 tmp_re="$(mktemp)"
 awk '{print "^"$0"$"}' "$IDS" > "$tmp_re"
 seqkit grep -r -f "$tmp_re" "$IN_FASTA" > "$OUT_FASTA"
 rm -f "$tmp_re"
 
+# Para el reporte final
 seqcount=$(grep -c '^>' "$OUT_FASTA" || true)
 echo "    -> IDs con $PFAM_ID: $idcount | Secuencias en FASTA final: $seqcount"
 echo "    OK: $OUT_FASTA"
