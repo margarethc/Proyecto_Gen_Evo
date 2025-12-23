@@ -70,7 +70,7 @@ if [ ! -f "$REFS_FASTA" ]; then
 fi
 
 if ! command -v mafft >/dev/null 2>&1; then
-  echo "ERROR: mafft no está en PATH. Instala MAFFT en cutinase_pipe." >&2
+  echo "ERROR: mafft no está en PATH." >&2
   exit 1
 fi
 if ! command -v seqkit >/dev/null 2>&1; then
