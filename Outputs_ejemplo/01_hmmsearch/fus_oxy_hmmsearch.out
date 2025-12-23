@@ -1,0 +1,404 @@
+# hmmsearch :: search profile(s) against a sequence database
+# HMMER 3.4 (Aug 2023); http://hmmer.org/
+# Copyright (C) 2023 Howard Hughes Medical Institute.
+# Freely distributed under the BSD open source license.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query HMM file:                  data/hmm_model/cutinase.hmm
+# target sequence database:        data/proteomes/fus_oxy.faa
+# per-dom hits tabular output:     /home/margaret/cutinasas_pipeline/results/01_hmmsearch/fus_oxy/fus_oxy.domtblout
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       references_aln  [M=192]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence   Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------   -----------
+    1.7e-86  288.5   0.1    2.1e-86  288.3   0.1    1.0  1  QKD60954.1  cutinase-domain-containing protein [Fusarium oxys
+    9.9e-84  279.5   0.0    1.2e-83  279.3   0.0    1.0  1  QKD53817.1  cutinase-domain-containing protein [Fusarium oxys
+    1.9e-72  242.7   0.0    2.3e-72  242.4   0.0    1.1  1  QKD61503.1  cutinase-domain-containing protein [Fusarium oxys
+    2.3e-52  177.2   3.2    3.1e-52  176.8   3.2    1.1  1  QKD48196.1  cutinase-domain-containing protein [Fusarium oxys
+    1.3e-36  125.8   0.3    2.1e-36  125.1   0.3    1.2  1  QKD62814.1  cutinase-domain-containing protein [Fusarium oxys
+      5e-12   45.6   2.0    6.1e-09   35.5   1.3    2.5  2  QKD62157.1  cutinase [Fusarium oxysporum Fo47]
+    1.6e-09   37.5   0.7      3e-09   36.6   0.2    1.7  2  QKD53881.1  cutinase [Fusarium oxysporum Fo47]
+    1.7e-09   37.4   3.7    1.7e-09   37.4   0.5    2.5  2  QKD59797.1  cutinase-domain-containing protein [Fusarium oxys
+    2.9e-09   36.6   6.0    1.9e-07   30.7   2.8    2.9  2  QKD53914.1  cutinase [Fusarium oxysporum Fo47]
+    1.9e-08   33.9   0.2    3.6e-08   33.0   0.2    1.4  1  QKD50170.1  Alpha/Beta hydrolase protein [Fusarium oxysporum 
+    4.7e-08   32.6   0.1    9.4e-07   28.4   0.0    2.8  3  WJG34426.1  cutinase [Fusarium oxysporum Fo47]
+    6.8e-08   32.1   0.1    6.8e-08   32.1   0.1    3.0  4  QKD55094.1  Alpha/Beta hydrolase protein [Fusarium oxysporum 
+    2.4e-07   30.3   0.8    2.8e-05   23.6   0.8    3.2  1  WJG34425.1  cutinase [Fusarium oxysporum Fo47]
+     0.0013   18.2   0.0     0.0026   17.2   0.0    1.4  1  QKD47829.1  Alpha/Beta hydrolase protein [Fusarium oxysporum 
+  ------ inclusion threshold ------
+      0.018   14.4   0.0      0.029   13.8   0.0    1.2  1  QKD52827.2  Phospholipase/Carboxylesterase-domain-containing 
+      0.025   14.0   0.1       0.12   11.8   0.0    2.0  2  QKD54993.2  Alpha/Beta hydrolase protein [Fusarium oxysporum 
+      0.025   13.9   0.0      0.061   12.7   0.0    1.6  1  QKD57019.1  hypothetical protein FOBCDRAFT_251761 [Fusarium o
+      0.033   13.5   0.0      0.068   12.5   0.0    1.4  1  QKD57260.2  hypothetical protein FOBCDRAFT_321398 [Fusarium o
+
+
+Domain annotation for each sequence (and alignments):
+>> QKD60954.1  cutinase-domain-containing protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  288.3   0.1   2.3e-89   2.1e-86       3     192 .]      34     223 ..      32     223 .. 0.99
+
+  Alignments for each domain:
+  == domain 1  score: 288.3 bits;  conditional E-value: 2.3e-89
+  references_aln   3 sstredleegssgdCkkvilifargsteagnlgetvgpalaselesklgk.dvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcP 96 
+                     s tr+dl++g+sg+C+ vi+i+argste+gnlg t+gp++as+le+k+gk +v++qgVggay+a+l +nalprgtssaaire+  +f++a++kcP
+      QKD60954.1  34 SITRNDLANGNSGSCPGVIFIYARGSTESGNLG-TLGPRVASKLEAKYGKnGVWIQGVGGAYRATLGDNALPRGTSSAAIREMLGHFNDANQKCP 127
+                     6799*****************************.************************************************************* PP
+
+  references_aln  97 nakvvagGySqGaalvaaavsdLsaavreqvkgvvLFgytknaqnrgripnypsdrvkvfcavgdlvcegtlivtaahlaYgsdaageaaellek 191
+                     +a ++agGySqGaal+aa+v+d++a +re+++gvvLFgytkn qnrg+ip+yp+dr+kvfc++gdlvc+g+liv+a+hlaY+s a+g+a+e+l++
+      QKD60954.1 128 DAVLIAGGYSQGAALAAASVTDVDAGIREKIAGVVLFGYTKNLQNRGKIPSYPEDRTKVFCNTGDLVCTGSLIVAAPHLAYQSAASGAAPEFLIQ 222
+                     ********************************************************************************************987 PP
+
+  references_aln 192 k 192
+                     k
+      QKD60954.1 223 K 223
+                     5 PP
+
+>> QKD53817.1  cutinase-domain-containing protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  279.3   0.0   1.3e-86   1.2e-83       3     191 ..      39     227 ..      36     228 .. 0.98
+
+  Alignments for each domain:
+  == domain 1  score: 279.3 bits;  conditional E-value: 1.3e-86
+  references_aln   3 sstredleegssgdCkkvilifargsteagnlgetvgpalaselesklgk.dvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcP 96 
+                     s tr+dl +g+s++C+ vi+i+argste gnlg t+gp++as les++g+ +v++qgVggay+a+l +nalprgtssaaire+  lf+la++kcP
+      QKD53817.1  39 SITRDDLSNGASSACPPVIFIYARGSTELGNLG-TLGPRVASVLESNYGSnGVWIQGVGGAYRATLGDNALPRGTSSAAIREMIGLFNLANSKCP 132
+                     67899****************************.****************9******************************************** PP
+
+  references_aln  97 nakvvagGySqGaalvaaavsdLsaavreqvkgvvLFgytknaqnrgripnypsdrvkvfcavgdlvcegtlivtaahlaYgsdaageaaellek 191
+                     +ak+vagGySqGaal+aa+++dLs avr++v g+vLFgytkn qn gripnyp++r+ vfc++gdlvc+g+liv+a+hlaY+sda+g a+++l++
+      QKD53817.1 133 SAKIVAGGYSQGAALAAASIEDLSTAVRNKVVGTVLFGYTKNLQNLGRIPNYPRERTLVFCNIGDLVCTGSLIVAAPHLAYQSDASGPAPQFLIQ 227
+                     ********************************************************************************************987 PP
+
+>> QKD61503.1  cutinase-domain-containing protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  242.4   0.0   2.6e-75   2.3e-72       6     189 ..      43     225 ..      40     228 .. 0.98
+
+  Alignments for each domain:
+  == domain 1  score: 242.4 bits;  conditional E-value: 2.6e-75
+  references_aln   6 redleegssgdCkkvilifargsteagnlgetvgpalaselesklgkdvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakv 100
+                     r+dle+g s++C+ +il++argste+gnlg+tvgp+l ++++ ++  d+++qgVgg+y+adl+ n+lp+gt++a+i+eakrlf+ a  kcP++ v
+      QKD61503.1  43 RNDLENGDSSNCPTAILVYARGSTEPGNLGITVGPILVEAMQLAIP-DIWIQGVGGPYTADLAPNFLPEGTTDASIDEAKRLFQMAYDKCPDTPV 136
+                     79**************************************999998.************************************************ PP
+
+  references_aln 101 vagGySqGaalvaaavsdLsaavreqvkgvvLFgytknaqnrgripnypsdrvkvfcavgdlvcegtlivtaahlaYgsdaageaaell 189
+                     v++GySqG+ +v +a+s+L++av++qv g++LFgytkn+q  grip yp+dr+k+fc   dlvc+gtl + +ah+ Yg daa   +e+l
+      QKD61503.1 137 VTAGYSQGTVVVGYALSELEGAVQNQVVGAALFGYTKNEQLGGRIPDYPTDRTKIFCLPTDLVCDGTLFILPAHFLYGADAAVPGPEFL 225
+                     **********************************************************************************9999887 PP
+
+>> QKD48196.1  cutinase-domain-containing protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  176.8   3.2   3.5e-55   3.1e-52      10     191 ..     179     354 ..     174     355 .. 0.98
+
+  Alignments for each domain:
+  == domain 1  score: 176.8 bits;  conditional E-value: 3.5e-55
+  references_aln  10 eegssgdCkkvilifargsteagnlgetvgpalaselesklgk.dvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakvvag 103
+                     ++g sgdCk+v++ifarg+te gn+g++ gp + ++l+++lg+ ++ vqgV   y+a++ +  +++ +++a+++++++l+k+a ++cP++kvv++
+      QKD48196.1 179 QNGLSGDCKDVTVIFARGTTEMGNVGTAAGPPFFQALAQQLGSdKLAVQGVE--YAASVGG--IMQMGDQAGSQKMVSLVKEAYQRCPKTKVVMS 269
+                     6899***************************************9********..*******..******************************** PP
+
+  references_aln 104 GySqGaalvaaavsdLsaavreqvkgvvLFgytknaqnrgripnypsdrvkvfcavgdlvcegtlivtaahlaYgsdaageaaellek 191
+                     GySqGa+lv++a++ L a++  ++++vv Fg++ ++q+  ++p   +drvk++c++gd vc gt  +t+ hl+Y +da+++a+++++k
+      QKD48196.1 270 GYSQGAMLVHNAAKSLPADTTSKIAAVVNFGDPFQRQAIQGVP---ADRVKIICHAGDGVCAGTAAITPDHLTYSQDANAAAQFVVSK 354
+                     ******************************************9...*************************************99976 PP
+
+>> QKD62814.1  cutinase-domain-containing protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  125.1   0.3   2.4e-39   2.1e-36       5     168 ..      61     217 ..      58     223 .. 0.95
+
+  Alignments for each domain:
+  == domain 1  score: 125.1 bits;  conditional E-value: 2.4e-39
+  references_aln   5 tredleegssgdCkkvilifargsteagnlge..tvgpalaselesklgk.dvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcP 96 
+                     t ++l  g    C++v++i+args +agn+g+   +gpal ++l++++g  ++ vqgV   y+a   + ++++g+ +++++++++l+++aa++cP
+      QKD62814.1  61 TYNQLTDGT--PCRNVTMIYARGSRQAGNVGKanNTGPALFNSLADRIGLeNLAVQGVT--YKARRRD-FIFKGGCNEGSKTMAKLINQAASQCP 150
+                     556666666..7*******************9999**************99********..****999.************************** PP
+
+  references_aln  97 nakvvagGySqGaalvaaavsdLsaavreqvkgvvLFgytknaqnrgripnypsdrvkvfcavgdlvcegtl 168
+                     ++k+v +GySqGa+l+++a+++++a v ++++++v  gy+k+  + g+i+   ++r   +c  gd  c++t+
+      QKD62814.1 151 DTKIVIAGYSQGAQLLHKAAKNVTAGVTQHIAAAVTLGYPKK--PMGKIA---ASRSLSVCRPGDSFCDKTI 217
+                     *****************************************9..*****9...9999999*********987 PP
+
+>> QKD62157.1  cutinase [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   35.5   1.3   6.8e-12   6.1e-09      15     138 ..      24     137 ..      18     144 .. 0.71
+   2 !    8.0   0.0    0.0018       1.6     143     184 ..     165     208 ..     152     214 .. 0.84
+
+  Alignments for each domain:
+  == domain 1  score: 35.5 bits;  conditional E-value: 6.8e-12
+  references_aln  15 gdCkkvilifargsteagnlgetvgp.alaselesklgkdvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakvvagGySqG 108
+                     ++C + ++i  rg+ e+++ +   g  ++ s++ s++         g  y+      a+ ++ s ++ +++ r +k +  + P+   ++ GySqG
+      QKD62157.1  24 AKCTSYTIINTRGTGEIQGPS--AGFrTMNSQITSQVPG-------GKIYNTVYL--AGYDQNSAQGTQDIIREVKSVLASNPSECFILEGYSQG 107
+                     557777777777777766555..2220233333333332.......222332222..3555566666778889999999999************* PP
+
+  references_aln 109 aalvaaavsdLsaavreqvkgvvLFgytkn 138
+                     aa   +a+s+L+++  + vkgv L g++  
+      QKD62157.1 108 AAATVNALSQLTGSAGDAVKGVFLIGDPLH 137
+                     ***************************976 PP
+
+  == domain 2  score: 8.0 bits;  conditional E-value: 0.0018
+  references_aln 143 gripnypsdrvkvfcavgdlvcegt..livtaahlaYgsdaage 184
+                     ++ip    +r+  +c  gd vc+ t  + + a+hl+Y  daa +
+      QKD62157.1 165 AGIPQNWISRTLDVCIFGDGVCDTThgFGINAQHLQYPNDAATQ 208
+                     56777777899999********8643399**********99765 PP
+
+>> QKD53881.1  cutinase [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   36.6   0.2   3.3e-12     3e-09      16     150 ..      48     170 ..      39     175 .. 0.78
+   2 ?   -2.1   0.0       2.3   2.1e+03     152     178 ..     206     236 ..     198     246 .. 0.63
+
+  Alignments for each domain:
+  == domain 1  score: 36.6 bits;  conditional E-value: 3.3e-12
+  references_aln  16 dCkkvilifargsteagnlgetvgpalaselesklgk..dvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakvvagGySqG 108
+                      C+   l+ args e+++++     ++ + ++  l++  + + q V   y a+  +n        ++ + ++  +k   + cP+ k  + GySqG
+      QKD53881.1  48 PCATYKLLDARGSGEPQGVS----LMFQNTIQRILANntGAVSQAVV--YPAGFDQN------VTSGVKFVTDIIKYGLQDCPKQKYFLFGYSQG 130
+                     57777778888888888777....55555555544442235566676..88887773......234445677899999***************** PP
+
+  references_aln 109 aalvaaavsdLsaavreqvkgvvLFgytknaqnrgripnyps 150
+                     a +v+ a+s+L++a    v++vv+ g +      gr++ny s
+      QKD53881.1 131 ATVVQRALSELDDASMAAVSSVVMVGNPYR--TPGRLSNYDS 170
+                     ***************************988..8899999976 PP
+
+  == domain 2  score: -2.1 bits;  conditional E-value: 2.3
+  references_aln 152 rvkvfcavgdlvcegtli....vtaahlaYg 178
+                     +v  +c  +d vc  + +     ++ hl+Yg
+      QKD53881.1 206 KVADICLENDIVCSFDPNctcqLASDHLSYG 236
+                     6777899999999754440000445566665 PP
+
+>> QKD59797.1  cutinase-domain-containing protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   37.4   0.5   1.9e-12   1.7e-09      11     138 ..      20     149 ..      13     222 .. 0.85
+   2 ?   -0.7   0.2      0.88     8e+02      61     104 ..     221     265 ..     209     273 .. 0.68
+
+  Alignments for each domain:
+  == domain 1  score: 37.4 bits;  conditional E-value: 1.9e-12
+  references_aln  11 egssgdCkk.vilifargsteagnlgetvgpalaselesklgkdvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakvvagG 104
+                     +g+ ++C++ + +i  rg+ e+++ g  +g ++a++++++++ +  v +    y a+l++     ++++a+ + + + + +  ++cPn k+++ G
+      QKD59797.1  20 KGEKTECADgLYMIAVRGTGEDKGSG-RIG-EIAEDVSKRVN-GSIVSPLD--YPATLQD-PDYFDSEEAGVKALSAALDDYHSSCPNGKIAVFG 108
+                     56667788735678889*****9999.788.67788887777.67799999..******9.556689999************************* PP
+
+  references_aln 105 ySqGaalvaaav......sdLs.aavreqvkgvvLFgytkn 138
+                     ySqG++++ +        + L+ + v++ v +v  Fg++  
+      QKD59797.1 109 YSQGGQVATDVFcggsdnKPLTmSLVKDSVVAVIAFGDPSH 149
+                     *******9986522222234555678999999999999876 PP
+
+  == domain 2  score: -0.7 bits;  conditional E-value: 0.88
+  references_aln  61 gayeadlkanalprgtssaa.ireakrlfklaakkcPnakvvagG 104
+                       ye +lk++    +ts aa  ++a++  +  a+  P+a+ +a G
+      QKD59797.1 221 ERYEKALKDESTSTQTSTAAaTATAETSGSATASDAPSATTAAPG 265
+                     467777887777666665550556666667777888888887776 PP
+
+>> QKD53914.1  cutinase [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   30.7   2.8   2.1e-10   1.9e-07      11     116 ..      17     121 ..      10     160 .. 0.76
+   2 ?    5.1   0.1     0.014        13     149     189 ..     184     223 ..     176     226 .. 0.73
+
+  Alignments for each domain:
+  == domain 1  score: 30.7 bits;  conditional E-value: 2.1e-10
+  references_aln  11 egssgdCkkvilifargsteagnlgetvgpalaselesklgkdvtvqgVggayeadlkanalpr..gtssaaireakrlfklaakkcPnakvvag 103
+                     + ++++C+++ +  ar + +a + g + g  l + +++    + t   + ++   + ++  +++  ++ +++ + +++ ++  +++cP++k+v+ 
+      QKD53914.1  17 AVEAQSCPDIHIFGARETSVAPGFG-SAGQ-LVDMIKADHP-GATSEAIDYPACGGQASCGGVQygDSAKQGTQAVTTAVNGLNQRCPQTKIVLV 108
+                     5567889998888899999998888.5564.4455555544.5666777766655555555555115555566778899999************* PP
+
+  references_aln 104 GySqGaalvaaav 116
+                     GySqG++++++ +
+      QKD53914.1 109 GYSQGGQIMDNNI 121
+                     ********99866 PP
+
+  == domain 2  score: 5.1 bits;  conditional E-value: 0.014
+  references_aln 149 psdrvkvfcavgdlvcegtlivtaahlaYgsdaageaaell 189
+                      +d+v+++c+++d  c ++ +   +h +Y s    ea  ++
+      QKD53914.1 184 NADKVQIYCDSQDPFCCNG-NDSNHHQQYVSIYGKEALAFV 223
+                     479***********99876.455666667666666666665 PP
+
+>> QKD50170.1  Alpha/Beta hydrolase protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   33.0   0.2     4e-11   3.6e-08      38     120 ..     105     188 ..      94     216 .. 0.91
+
+  Alignments for each domain:
+  == domain 1  score: 33.0 bits;  conditional E-value: 4e-11
+  references_aln  38 vgpalaselesklgk.dvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakvvagGySqGaalvaaavsdLs 120
+                     + ++++++++++++  ++ +     + +++  ++ +++ + ++ +++a++ ++ a k  P+ kv+++G+S+G+a++  a+++L+
+      QKD50170.1 105 IVVSFRGSINIRNWLtNLDFGQEDCSLVSGCGVHSGFQRAWNEISSQATAAVASARKANPSFKVISTGHSLGGAVAVLAAANLR 188
+                     778999999999999999999999999*****************************************************9997 PP
+
+>> WJG34426.1  cutinase [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   28.4   0.0     1e-09   9.4e-07      16     114 ..      25     116 ..      13     124 .. 0.75
+   2 ?   -1.1   0.0       1.2   1.1e+03     145     162 ..     132     149 ..     128     154 .. 0.88
+   3 ?   -0.2   0.0      0.61   5.5e+02     150     176 ..     180     206 ..     175     215 .. 0.72
+
+  Alignments for each domain:
+  == domain 1  score: 28.4 bits;  conditional E-value: 1e-09
+  references_aln  16 dCkk.vilifargsteagnlgetvgpalaselesklgkdvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakvvagGySqGa 109
+                      C+k + li args e+ + g ++g+   + ++   g+d+        y a  ++     +++ ++ r++ + +++  k+cP++ +++ GySqGa
+      WJG34426.1  25 TCAKgAHLIVARGSLEPEGPG-AMGILAEEIIKLIPGSDMEA--LV--YPALYNE---YVESQTEGVRTMNSVINNYVKNCPDTDLILMGYSQGA 111
+                     454326789999999998888.77776555555555556543..33..7777666...667899999**************************** PP
+
+  references_aln 110 alvaa 114
+                      +  +
+      WJG34426.1 112 HVTMD 116
+                     99766 PP
+
+  == domain 2  score: -1.1 bits;  conditional E-value: 1.2
+  references_aln 145 ipnypsdrvkvfcavgdl 162
+                      p+y +d+v  ++a+gd 
+      WJG34426.1 132 QPSYITDNVAAIIAMGDP 149
+                     599*************96 PP
+
+  == domain 3  score: -0.2 bits;  conditional E-value: 0.61
+  references_aln 150 sdrvkvfcavgdlvcegtlivtaahla 176
+                     ++++  +c++gd  ce +    + hl+
+      WJG34426.1 180 ASKTVSICDKGDPYCEAGGKDLSVHLS 206
+                     5788889********975444444444 PP
+
+>> QKD55094.1  Alpha/Beta hydrolase protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   32.1   0.1   7.6e-11   6.8e-08      13     113 ..      20     112 ..      11     116 .. 0.79
+   2 ?   -1.5   0.0       1.5   1.4e+03     126     140 ..     143     157 ..     138     160 .. 0.83
+   3 ?   -1.4   0.0       1.4   1.3e+03     151     177 ..     188     214 ..     177     228 .. 0.67
+   4 ?   -2.6   0.7       3.4   3.1e+03      71      93 ..     257     279 ..     235     309 .. 0.66
+
+  Alignments for each domain:
+  == domain 1  score: 32.1 bits;  conditional E-value: 7.6e-11
+  references_aln  13 ssgdCkkvilifargstea..gnlgetvgpalaselesklgkdvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakvvagGy 105
+                     +  dCk+v +  a+g  e+  g  g  +  a++s l+s   +d+ +q        +l++   + ++  ++ ++  ++++  +kkcP++k+v++Gy
+      QKD55094.1  20 KRDDCKDVHIFLAKGNNEPypGRQG-KLAGAICSGLKSCDYEDIQFQN-------ALED--PFCDSVTEGVKNGIKQITAYNKKCPDSKLVVSGY 104
+                     5568999988889988886224455.6666788888888888888884.......4555..677888899999999******************* PP
+
+  references_aln 106 SqGaalva 113
+                     SqG+++v 
+      QKD55094.1 105 SQGGQVVG 112
+                     ******96 PP
+
+  == domain 2  score: -1.5 bits;  conditional E-value: 1.5
+  references_aln 126 qvkgvvLFgytknaq 140
+                     ++ ++ +Fg+t+ ++
+      QKD55094.1 143 KIVAAMVFGDTRHTK 157
+                     788999*****9865 PP
+
+  == domain 3  score: -1.4 bits;  conditional E-value: 1.4
+  references_aln 151 drvkvfcavgdlvcegtlivtaahlaY 177
+                     d+ + +c   d +c ++  v  +   +
+      QKD55094.1 188 DVFRNYCVETDPICAQGDEVETHLNYF 214
+                     566789999999998877666554444 PP
+
+  == domain 4  score: -2.6 bits;  conditional E-value: 3.4
+  references_aln  71 alprgtssaaireakrlfklaak 93 
+                     +  ++++ ++  ea+++ k+a k
+      QKD55094.1 257 TSTKDAETESTTEAASTTKDASK 279
+                     44445555555555555555544 PP
+
+>> WJG34425.1  cutinase [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   23.6   0.8   3.1e-08   2.8e-05       9     138 ..      21     149 ..      15     214 .. 0.65
+
+  Alignments for each domain:
+  == domain 1  score: 23.6 bits;  conditional E-value: 3.1e-08
+  references_aln   9 leegssgdC.kkvilifargsteagnlgetvgpalaselesklgkdvtvqgVggayeadlkanalprgtssaaireakrlfklaakkcPnakvva 102
+                     +++g+++ C   + +i args e+++ g  +g a+a+++ +          ++  y a  +     + ++ ++ + +  ++++  + cP++k+++
+      WJG34425.1  21 VQPGNAS-CvSGAHIIVARGSLEPRGPG-IIG-AVAQQVPHSEM-------ISLEYPAIYNP---YQPSQMEGVAALSVMLAQYVTVCPKTKIIL 102
+                     5666655.51456788888888888888.333.45555555555.......33446665555...55666777778889999999********** PP
+
+  references_aln 103 gGySqGaalvaaavsdL......s.....aavreqvkgvvLFgytkn 138
+                      G+SqGa ++a+ +               +a+ +++++vvL g++  
+      WJG34425.1 103 LGFSQGAHVIADVMCGAssigflPtkpspSAMTNNIAAVVLMGDPST 149
+                     **********9754332000111222223577888888888888655 PP
+
+>> QKD47829.1  Alpha/Beta hydrolase protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   17.2   0.0   2.9e-06    0.0026      67     121 ..     177     231 ..     173     254 .. 0.83
+
+  Alignments for each domain:
+  == domain 1  score: 17.2 bits;  conditional E-value: 2.9e-06
+  references_aln  67 lkanalprgtssaaireakrlfklaakkcPnakvvagGySqGaalvaaavsdLsa 121
+                      ++++++ ++  +a r +  ++ +   ++P++ v + G+S+G+ ++  a+ +L+ 
+      QKD47829.1 177 CTVHMGFLQSWRNARRLVLPQLRQLRLQYPSYPVQLVGHSLGGSVACLAALELKI 231
+                     567788888888999999999999999*************************985 PP
+
+>> QKD52827.2  Phospholipase/Carboxylesterase-domain-containing protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   13.8   0.0   3.2e-05     0.029      72     114 ..     135     182 ..     128     193 .. 0.75
+
+  Alignments for each domain:
+  == domain 1  score: 13.8 bits;  conditional E-value: 3.2e-05
+  references_aln  72 lprgtssaaireakrlfkl.....aakkcPnakvvagGySqGaalvaa 114
+                     l+r+ + ++i+  +++f++     +++  P  ++v+gG+SqG+a+   
+      QKD52827.2 135 LVRNEDTEGIKRSQKYFHDliqeeVNSGIPPERIVLGGFSQGGAMSLL 182
+                     67777777887777777642222267889**************98665 PP
+
+>> QKD54993.2  Alpha/Beta hydrolase protein [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   11.8   0.0   0.00013      0.12      85     112 ..     304     331 ..     273     334 .. 0.85
+   2 ?   -1.1   0.0       1.2   1.1e+03      50      85 ..     577     610 ..     545     614 .. 0.82
+
+  Alignments for each domain:
+  == domain 1  score: 11.8 bits;  conditional E-value: 0.00013
+  references_aln  85 krlfklaakkcPnakvvagGySqGaalv 112
+                      +l +++++ +P+a+v ++G+S+G+a+ 
+      QKD54993.2 304 RELYSNVTELYPDAQVWLTGHSLGGAVT 331
+                     5567788899****************96 PP
+
+  == domain 2  score: -1.1 bits;  conditional E-value: 1.2
+  references_aln  50 lgkdvtvqgVggayeadlkanalprgtssaaireak 85 
+                        +vt ++V  a++ ++++  +p+ + ++++r ++
+      QKD54993.2 577 EPGQVTNVPVTAAPTGTTED--VPSTSVPESQRCLT 610
+                     3349999********99999..99999998887665 PP
+
+>> QKD57019.1  hypothetical protein FOBCDRAFT_251761 [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   12.7   0.0   6.8e-05     0.061      62     117 ..     122     176 ..     118     186 .. 0.81
+
+  Alignments for each domain:
+  == domain 1  score: 12.7 bits;  conditional E-value: 6.8e-05
+  references_aln  62 ayeadlkanalprgtssaaireakrlfklaakkcPnakvvagGySqGaalvaaavs 117
+                      y++ +k++a+ +  s    +e+ + ++  a k P+ +++  G+S G+ ++++a+ 
+      QKD57019.1 122 NYDSYWKNDAIEERRSRL-GHELFEEVTSMAVKTPERSIIFVGHSYGGLVIKEALL 176
+                     578888775555555544.45999****************************9986 PP
+
+>> QKD57260.2  hypothetical protein FOBCDRAFT_321398 [Fusarium oxysporum Fo47]
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   12.5   0.0   7.6e-05     0.068      62     117 ..     122     176 ..     118     186 .. 0.81
+
+  Alignments for each domain:
+  == domain 1  score: 12.5 bits;  conditional E-value: 7.6e-05
+  references_aln  62 ayeadlkanalprgtssaaireakrlfklaakkcPnakvvagGySqGaalvaaavs 117
+                      y++ +k++a+ +  s    +e+ + ++  a k P+ +++  G+S G+ ++++a+ 
+      QKD57260.2 122 NYDSYWKNDAIEERRSRL-GHELFEEVTSMAVKTPERSIIFVGHSYGGLVIKEALL 176
+                     578888775555555544.45999****************************9986 PP
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (192 nodes)
+Target sequences:                      16202  (7809438 residues searched)
+Passed MSV filter:                       435  (0.0268485); expected 324.0 (0.02)
+Passed bias filter:                      377  (0.0232687); expected 324.0 (0.02)
+Passed Vit filter:                        63  (0.00388841); expected 16.2 (0.001)
+Passed Fwd filter:                        18  (0.00111097); expected 0.2 (1e-05)
+Initial search space (Z):              16202  [actual number of targets]
+Domain search space  (domZ):              18  [number of targets reported over threshold]
+# CPU time: 0.08u 0.02s 00:00:00.10 Elapsed: 00:00:00.04
+# Mc/sec: 32034.82
+//
+[ok]
