@@ -18,6 +18,7 @@
 
 set -euo pipefail
 
+#PARÁMETROS POR DEFECTO
 THRESHOLD="1e-10"
 COLUMN="domain"   # domain=i-Evalue por dominio, full=E-value secuencia completa
 SAMPLE=""
@@ -30,8 +31,8 @@ Uso: $0 -s <sample> [-t THRESHOLD] [-c domain|full]
   -c COLUMN      domain o full (default: $COLUMN)
 EOF
   exit 2
-}
 
+# Argumentos
 while getopts ":s:t:c:h" opt; do
   case "$opt" in
     s) SAMPLE="$OPTARG" ;;
@@ -45,7 +46,7 @@ done
 
 [ -z "$SAMPLE" ] && usage
 
-# Root del repo (asumiendo ejecución desde cutinasas_pipeline/)
+# Construcción de rutas: Root del repo (asumiendo ejecución desde cutinasas_pipeline/)
 PIPE_ROOT="$(pwd)"
 DOMTBL="${PIPE_ROOT}/results/01_hmmsearch/${SAMPLE}/${SAMPLE}.domtblout"
 
@@ -58,7 +59,7 @@ for ext in faa fasta fa fna; do
     break
   fi
 done
-
+# ¿Se encuentran todos los archivos?
 if [ ! -f "$DOMTBL" ]; then
   echo "No se encuentra domtblout: $DOMTBL" >&2
   exit 1
@@ -73,12 +74,14 @@ if ! command -v seqkit >/dev/null 2>&1; then
   exit 1
 fi
 
+# Encontrar la columna correcta para el e-value 
 case "$COLUMN" in
   domain) COL_IDX=13 ;;  # domtblout: i-Evalue por dominio (col 13)
   full)   COL_IDX=7  ;;  # domtblout: full sequence E-value (col 7)
   *) echo "COLUMN inválida: $COLUMN (usa 'domain' o 'full')" >&2; exit 2 ;;
 esac
 
+#Outputs por cada muestra
 OUTDIR="${PIPE_ROOT}/results/01_hmmsearch/${SAMPLE}"
 mkdir -p "$OUTDIR"
 
@@ -93,7 +96,7 @@ echo "    proteoma   : $PROTEOME"
 echo "    ids        : $IDS_FILE"
 echo "    out fasta  : $OUT_FASTA"
 
-# 1) extraer IDs (target_name = col 1 en domtblout)
+# 1) Extracción de IDs que superan el umbral (target_name = col 1 en domtblout)
 awk -v col="$COL_IDX" -v thr="$THRESHOLD" '
   BEGIN { thrn = thr + 0 }
   $0 ~ /^#/ { next }
@@ -105,18 +108,14 @@ awk -v col="$COL_IDX" -v thr="$THRESHOLD" '
 ' "$DOMTBL" | sort -u > "$IDS_FILE"
 
 idcount=$(wc -l < "$IDS_FILE" | tr -d ' ')
-if [ "$idcount" -eq 0 ]; then
-  echo "    -> 0 hits bajo el umbral. Creo FASTA vacío: $OUT_FASTA"
-  : > "$OUT_FASTA"
-  exit 0
-fi
 
-# 2) extraer secuencias del proteoma con seqkit (regex anclada)
+
+# 2) Extraer secuencias del proteoma con seqkit (regex anclada)
 tmp_re="$(mktemp)"
 awk '{print "^"$0"$"}' "$IDS_FILE" > "$tmp_re"
 seqkit grep -r -f "$tmp_re" "$PROTEOME" > "$OUT_FASTA"
 rm -f "$tmp_re"
 
-
+#Para el reporte final
 seqcount=$(grep -c '^>' "$OUT_FASTA" || true)
 echo "    -> IDs únicos: $idcount | Secuencias extraídas: $seqcount"
