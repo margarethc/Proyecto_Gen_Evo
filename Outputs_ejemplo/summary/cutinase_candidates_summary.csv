@@ -1,0 +1,6 @@
+sample,sequence_id,length_original_aa,length_secreted_trimmed_aa,length_final_selected_aa,hmm_query,hmm_full_evalue,hmm_full_bitscore,hmm_domain_ievalue,hmm_domain_bitscore,hmm_ali_from,hmm_ali_to,hmm_hmm_from,hmm_hmm_to,hmm_acc,has_signal_peptide,signalp_start,signalp_end,signalp_cleavage_after_aa,signalp_mature_length_aa,pfam_accession,pfam_hit,pfam_evalue_full,pfam_bitscore_full,pfam_domain_ievalue,pfam_domain_bitscore,pfam_ali_from,pfam_ali_to,pfam_desc
+fus_oxy,QKD48196.1,356,334,334,references_aln,2.3e-52,177.2,3.1e-52,176.8,179,354,10,191,0.98,yes,1,22,22,334,PF01083,Cutinase,5.7e-53,179.8,7.3e-53,179.5,164,333,Cutinase
+fus_oxy,QKD53817.1,234,199,199,references_aln,9.9e-84,279.5,1.2e-83,279.3,39,227,3,191,0.98,yes,1,35,35,199,PF01083,Cutinase,1.8e-53,181.5,2e-53,181.3,17,193,Cutinase
+fus_oxy,QKD60954.1,230,201,201,references_aln,1.7e-86,288.5,2.1e-86,288.3,34,223,3,192,0.99,yes,1,29,29,201,PF01083,Cutinase,2.5e-54,184.2,2.9e-54,184.1,18,194,Cutinase
+fus_oxy,QKD61503.1,231,206,206,references_aln,1.9e-72,242.7,2.3e-72,242.4,43,225,6,189,0.98,yes,1,25,25,206,PF01083,Cutinase,1.5e-43,149.2,1.7e-43,149.0,29,203,Cutinase
+fus_oxy,QKD62814.1,262,237,237,references_aln,1.3e-36,125.8,2.1e-36,125.1,61,217,5,168,0.95,yes,1,25,25,237,PF01083,Cutinase,1e-39,136.7,2e-39,135.7,45,198,Cutinase
