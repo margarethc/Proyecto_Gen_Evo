@@ -69,13 +69,16 @@ Desarrollar y evaluar un pipeline automatizado que integre HMMER, PFam y anális
 Tabla de contenidos
 ------------------
 - Descripción general
-- Convenciones de nombres y estructura de salida
 - Requisitos y dependencias
-- Instalación rápida y contenedores recomendados
-- Flujo (paso a paso) — comandos de ejemplo
+- Directorio
+- Flujo de trabajo y ejemplos de comandos
+- Formatos de salida
 
 Descripción general
 ------------------
+Lenguaje:
+- Bash
+- Python
 Entrada principal:
 - Uno o varios archivos FASTA de proteínas con extensión .faa
 - Un perfil HMM (.hmm) que define la familia o dominio a buscar
@@ -185,7 +188,7 @@ cutinasas_pipeline/
 
 ```
 
-Flujo detallado (paso a paso) y ejemplos de comandos
+Flujo de trabajo y ejemplos de comandos
 --------------------------------------------------
 
 1) Búsqueda HMM — generar `<sample>_hits.txt`
