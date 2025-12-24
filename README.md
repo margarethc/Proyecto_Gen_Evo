@@ -6,7 +6,18 @@ Este repositorio contiene la descripción de un pipeline bioinformático para id
 Este documento explica requisitos, convenciones de nombres, pasos, ejemplos de comandos y recomendaciones de despliegue.
 
 ```mermaid
-%%{init: {"theme":"default","themeVariables":{"background":"#ffffff"}}}%%
+%%{init: {
+  "theme":"default",
+  "themeVariables":{
+    "primaryColor":"#e8f0fe",
+    "primaryTextColor":"#000000",
+    "primaryBorderColor":"#6b8ec1",
+    "lineColor":"#4a4a4a",
+    "secondaryColor":"#f5f7fa",
+    "tertiaryColor":"#ffffff",
+    "background":"#ffffff"
+  }
+}}%%
 flowchart TD
 
     %% Entradas
