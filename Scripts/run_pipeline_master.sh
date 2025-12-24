@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Ejecuta desde el root del repo
+# Ejecución desde el root del repositorio
 PIPE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PIPE_ROOT"
 
@@ -29,7 +29,7 @@ echo "Refs         : data/references/$REFS"
 echo "E-value thr  : $EVALUE_THR"
 echo
 
-# 1) Checks mínimos
+# 1) Verificación - Conda
 command -v conda >/dev/null 2>&1 || { echo "ERROR: conda no está en PATH." >&2; exit 1; }
 
 # Scripts esperados
@@ -66,7 +66,7 @@ echo "Usando HMM: $MODEL"
 echo
 
 # -----------------------
-# PIPELINE POR SAMPLE
+# PIPELINE POR MUESTRA
 # -----------------------
 for p in "${PROTEOMES[@]}"; do
   base="$(basename "$p")"
